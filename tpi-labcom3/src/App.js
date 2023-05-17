@@ -1,13 +1,12 @@
 import './App.css';
-//import LogIn from './components/LogIn/logIn';
 import NavBar from './components/NavBar/NavBar';
-import LogInDataBase from './components/LogIn/LogInDataBase';
+import Login from './components/LogIn/logIn';
 
 function App() {
   return (
     <div className="App">
       <NavBar/>
-      <button onClick={LogInDataBase}>Log In</button>
+      <Login/>
     </div>
   );   
 }

@@ -1,16 +1,96 @@
-/*import React from "react";
-import {useAuth0} from "@auth0/auth0-react";
+import React, { useRef, useState } from "react";
 
-const LogIn = () => {
-  const {loginWithRedirect} = useAuth0();
-    return (
-      <button onClick={() => loginWithRedirect()}>LogIn</button>
-  )
-}
+import "./Login.css";
 
-export default LogIn;
-*/
-/*<Auth0Provider 
-    domain= "dev-g2614dz46renuxk8.us.auth0.com" 
-    clientId= "Gtg3PFLm4zv5S98z7KGQWuimXm5b4yGh" 
-    authorizationParams={{ redirect_uri: window.location.origin }}>*/
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState([
+    { text: "Email no puede ser vacio", isError: false },
+    { text: "Password no puede ser vacio", isError: false },
+  ]);
+  const [showButton, setshowButton] = useState(false);
+  const emailRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  const emailChangeHandler = (e) => {
+    setEmail(e.target.value);
+  };
+
+  // const passwordChangeHandler = (e) => {
+  //   setPassword(e.target.value);
+  // };
+  const showButtonHandler = () => {
+    return setshowButton(true);
+  };
+  const cancelButtonHandler = () =>{
+    return setshowButton(false);
+  };
+  const signInHandler = () => {
+    if (email.length === 0) {
+      emailRef.current.focus();
+      emailRef.current.style.borderColor = "red";
+      emailRef.current.style.outline = "none";
+      const newErrors = [...errors];
+      newErrors[0].isError = true;
+      setErrors(newErrors);
+      return;
+    }
+
+    if (passwordRef.current.value.length === 0) {
+      console.log("here");
+      passwordRef.current.focus();
+      const newErrors = [...errors];
+      newErrors[1].isError = true;
+      setErrors(newErrors);
+      return;
+    }
+    alert(
+      `Su email ${email} y su password ${passwordRef.current.value} han sido registrados`
+    );
+  };
+
+  return (
+    <div className="login-container">
+      {showButton ? (
+        <div className="login-box">
+          <h4 className={`${email.length === 0 && "red-text"}`}>
+            ¡Bienvenidos a Book Champions!
+          </h4>
+          <div className="input-container">
+            <input
+              className="input-control"
+              placeholder="Email"
+              type="email"
+              onChange={emailChangeHandler}
+              value={email}
+              ref={emailRef}
+            />
+          </div>
+          {errors[0].isError && <p>{errors[0].text}</p>}
+          <div className="input-container">
+            <input
+              className="input-control"
+              placeholder="Password"
+              type="password"
+              ref={passwordRef}
+            />
+          </div>
+          {errors[1].isError && <p>{errors[1].text}</p>}
+          <button
+            onClick={signInHandler}
+            className="signin-button"
+            type="button"
+          >
+            Iniciar sesión
+          </button>
+          <button onClick={cancelButtonHandler} className="cancelButton">Cancelar</button>
+        </div>
+        
+      ) : (
+        <button onClick={showButtonHandler} className="showButton">Iniciar Sesión</button>
+      )}
+    </div>
+  );
+};
+
+export default Login;
