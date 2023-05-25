@@ -54,7 +54,7 @@ const Login = () => {
       {showButton ? (
         <div className="login-box">
           <h4 className={`${email.length === 0 && "red-text"}`}>
-            ¡Bienvenidos a Book Champions!
+            ¡Bienvenidos a To Do List!
           </h4>
           <div className="input-container">
             <input
